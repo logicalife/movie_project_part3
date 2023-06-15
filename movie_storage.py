@@ -17,7 +17,7 @@ def get_list_movies():
       },
     }
     """
-    pass
+
 
 
 def add_movie(title, year, rating):
