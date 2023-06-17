@@ -26,9 +26,6 @@ class MovieApp:
     def _command_add_movie(self):
         movies = self.storage.list_movies()
         new_movie = str(input("\nEnter new movie name : "))
-        if new_movie.casefold() in [movie.casefold() for movie in movies]:
-            print(f'Movie {new_movie} is already listed\n')
-            return
         movie_data = json.loads(requests.get(URL + "t=" + new_movie).text)
         if "Error" in movie_data:
             print(f'{movie_data["Error"]}')
@@ -41,7 +38,12 @@ class MovieApp:
         res = json.loads(requests.get(IMDB_API + title).text)
         imdb_id = res["results"][0]["id"]
         imdb_link = IMDB_URL + imdb_id
+        if title.casefold() in [movie.casefold() for movie in movies]:
+            print(f'Movie {title} is already listed\n')
+            input("\nPress enter to continue:")
+            return
         self.storage.add_movie(title, year, rating, poster, imdb_link)
+        print(f'Movie {title} added successfully\n')
         input("\nPress enter to continue:")
 
     def _command_delet_movie(self):
