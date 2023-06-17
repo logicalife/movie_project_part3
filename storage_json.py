@@ -5,7 +5,6 @@ class StorageJson(IStorage):
     def __init__(self,filepath):
         self.filepath = filepath
 
-
     def list_movies(self):
         with open(self.filepath, "r") as fileobj:
             data = json.loads(fileobj.read())
